@@ -1,0 +1,104 @@
+group 'ICSEWrapper'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'OpenText Information Hub IPSE Helper',
+                'Implementation-Version': '1.0'
+    }
+    baseName = 'ipse-helper-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+tasks.withType(Jar) {
+    destinationDir = file("/Users/kclark/Desktop/")
+}
+
+
+def jacksonBaseGroup          = 'com.fasterxml.jackson'
+def jacksonBaseName           = 'jackson'
+def jacksonBaseCoreGroup      = jacksonBaseGroup + '.core'
+def jacksonVersion            = '2.8.7'
+
+def springFrameworkBaseGroup  = 'org.springframework'
+def springFrameworkBaseName   = 'spring'
+def springVersion             = '2.5'
+
+def servletGroup              = 'javax.servlet'
+def servletName               = 'servlet-api'
+def servletVersion            = '2.5'
+
+def beanValidationGroup       = 'javax.validation'
+def beanValidationName        = 'validation-api'
+def beanValidationVersion     = '1.1.0.Final'
+
+def jacksonCoreGroup          = jacksonBaseCoreGroup
+def jacksonCoreName           = jacksonBaseName + '-core'
+def jacksonCoreVersion        = jacksonVersion
+
+def jacksonAnnotationsGroup   = jacksonBaseCoreGroup
+def jacksonAnnotationsName    = jacksonBaseName + '-annotations'
+def jacksonAnnotationsVersion = jacksonVersion
+
+def jacksonDataBindGroup      = jacksonBaseCoreGroup
+def jacksonDataBindName       = jacksonBaseName + '-databind'
+def jacksonDataBindVersion    = jacksonVersion
+
+def springTestGroup           = springFrameworkBaseGroup
+def springTestName            = springFrameworkBaseName + '-test'
+def springTestVersion         = springVersion
+
+def springCoreGroup           = springFrameworkBaseGroup
+def springCoreName            = springFrameworkBaseName + '-core'
+def springCoreVersion         = springVersion
+
+def jspApiGroup               = 'javax.servlet.jsp'
+def jspApiName                = 'jsp-api'
+def jspApiVersion             = '2.0'
+
+def androidGroup              = 'com.google.android'
+def androidName               = 'android'
+def androidVersion            = '4.1.1.4'
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+
+    compile group: servletGroup,            name: servletName,            version: servletVersion
+    compile group: beanValidationGroup,     name: beanValidationName,     version: beanValidationVersion
+    compile group: jacksonCoreGroup,        name: jacksonCoreName,        version: jacksonCoreVersion
+    compile group: jacksonAnnotationsGroup, name: jacksonAnnotationsName, version: jacksonAnnotationsVersion
+    compile group: jacksonDataBindGroup,    name: jacksonDataBindName,    version: jacksonDataBindVersion
+    compile group: androidGroup,            name: androidName,            version: androidVersion
+    compile group: springTestGroup,         name: springTestName,         version: springTestVersion
+    compile group: springCoreGroup,         name: springCoreName,         version: springCoreVersion
+    compile group: jspApiGroup,             name: jspApiName,             version: jspApiVersion
+}
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
