@@ -7,7 +7,7 @@
 
 IpseHelper is a wrapper for OpenText's Information Hub's popular IPSE security extension.  
 
-This extension point allows for you to pass in nearly any information you want to a servlet prior to report execution.  Once your information has been passed to the servlet you can preform your own authentication action on it and choose to allow or disallow access to the resource being requested
+This extension point allows for you to pass in nearly any information you want to a servlet prior to report execution.  Once your information has been passed to the servlet you can preform your own authentication action on it and choose to allow or disallow access to the resource being requested.
 
 IpseHelper is a library that aims to speed up this process by taking a single JSON string,  map it to a POJO, and finally set's this JSON a server side session level parameter for later use in a BIRT report should it be needed. 
 
@@ -58,7 +58,8 @@ public class JsonIpse extends IpseHelper {
 }
 ```
 
-The above code always allows the resource to be served.  For something more praticle you might do something like this
+
+The above code always allows the resource to be served.  For something more practical you might do something like this
 ```java
 package org.krisbox;
 
@@ -89,6 +90,35 @@ public class JsonIpse extends IpseHelper {
 }
 ```
 
+After writing a class that extends IpseHelper similar to what's shown above you will need to make the iHub aware that it should be using your IPSE.  
+
+First place your jar in the same location as the dependencies.
+
+Next open web.xml located at
+
+```
+%IHUB_HOME%\modules\BIRTiHub\iHub\web\birtservice\WEB-INF
+
+or
+
+C:\OpenText\InformationHub\modules\BIRTiHub\iHub\web\birtservice\WEB-INF
+```
+
+Then find the following line
+
+```
+<param-name>SECURITY_ADAPTER_CLASS</param-name>
+<param-value/>
+```
+
+Assuming the same package as above it would need to be modified to the following
+
+```
+<param-name>SECURITY_ADAPTER_CLASS</param-name>
+<param-value>org.krisbox.JsonIpse</param-value>
+```
+
+Finally restart the iHub service.
 
 ## Client Side
 
