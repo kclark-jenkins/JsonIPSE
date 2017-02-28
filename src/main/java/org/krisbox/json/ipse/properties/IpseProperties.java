@@ -108,7 +108,7 @@ public class IpseProperties implements Serializable, Parcelable
 
     @JsonProperty("username")
     public String getUsername() {
-        return username;
+        return isNull(username);
     }
 
     @JsonProperty("username")
@@ -123,7 +123,7 @@ public class IpseProperties implements Serializable, Parcelable
 
     @JsonProperty("password")
     public String getPassword() {
-        return password;
+        return isNull(password);
     }
 
     @JsonProperty("password")
@@ -138,7 +138,7 @@ public class IpseProperties implements Serializable, Parcelable
 
     @JsonProperty("volume")
     public String getVolume() {
-        return volume;
+        return isNull(volume);
     }
 
     @JsonProperty("volume")
@@ -153,7 +153,7 @@ public class IpseProperties implements Serializable, Parcelable
 
     @JsonProperty("volumeProfile")
     public String getVolumeProfile() {
-        return volumeProfile;
+        return isNull(volumeProfile);
     }
 
     @JsonProperty("volumeProfile")
@@ -168,7 +168,7 @@ public class IpseProperties implements Serializable, Parcelable
 
     @JsonProperty("extendedCredentials")
     public String getExtendedCredentials() {
-        return extendedCredentials;
+        return isNull(extendedCredentials);
     }
 
     @JsonProperty("extendedCredentials")
@@ -198,7 +198,7 @@ public class IpseProperties implements Serializable, Parcelable
 
     @JsonProperty("userHomeFolder")
     public String getUserHomeFolder() {
-        return userHomeFolder;
+        return isNull(userHomeFolder);
     }
 
     @JsonProperty("userHomeFolder")
@@ -277,6 +277,14 @@ public class IpseProperties implements Serializable, Parcelable
 
     public int describeContents() {
         return  0;
+    }
+
+    private String isNull(String value) {
+        if(value == null) {
+            return "";
+        }
+
+        return value;
     }
 
 }

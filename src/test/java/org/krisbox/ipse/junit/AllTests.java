@@ -8,8 +8,6 @@ import org.krisbox.ipse.junit.tests.StaticCookieIpseHelperTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        PojoTests.class,
-        StaticCookieIpseHelperTest.class,
         DynamicCookieIpseHelperTest.class
 })
 public class AllTests {

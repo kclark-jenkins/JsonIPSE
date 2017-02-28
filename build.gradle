@@ -16,7 +16,7 @@ task fatJar(type: Jar) {
 }
 
 tasks.withType(Jar) {
-    destinationDir = file("/Users/kclark/Desktop/")
+    destinationDir = file("C:\\OpenText\\InformationHub\\modules\\BIRTiHub\\iHub\\web\\birtservice\\WEB-INF\\lib")
 }
 
 
